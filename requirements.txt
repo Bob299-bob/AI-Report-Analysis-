@@ -8,8 +8,8 @@ sentence-transformers
 numpy
 faiss-cpu
 pdfplumber
-opencv-python
 pytesseract
 Pillow
 ddgs
 reportlab
+opencv-python-headless
