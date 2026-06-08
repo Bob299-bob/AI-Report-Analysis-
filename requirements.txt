@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+streamlit
+requests
+python-dotenv
+groq
+sentence-transformers
+numpy
+faiss-cpu
+pdfplumber
+opencv-python
+pytesseract
+Pillow
+ddgs
+reportlab
