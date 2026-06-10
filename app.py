@@ -1,6 +1,5 @@
 import streamlit as st
-from research import extract_pdf,extract_img
-import requests
+from research import extract_pdf,extract_img,rag_system,retrieve,generate_report,search_net
 
 st.set_page_config(
     page_title="AI Medical Report Analysis",
@@ -141,25 +140,20 @@ if file_upload is not None:
     query=st.text_input('Enter Your Query')
     if query:
         if st.button('Press'):
-            url='http://127.0.0.1:8000/report'
-            data={
-                'input_data':input_data,
-                'query':query
-            }
-            response=requests.post(url,json=data)
-            if response.status_code != 200:
-                st.error(response.text)
-                st.stop()
             try:
-                result = response.json()
-                pdf_file = create_beautiful_pdf(result, query)
+                index,chunks=rag_system(input_data)
+                if len(chunks) == 0:
+                        st.stop()
+                context=retrieve(index,chunks,query)
+                result=search_net(query)
+                answer=generate_report(context,result,query)
+                pdf_file = create_beautiful_pdf(answer, query)
                 st.download_button(
                 label="📥 Download Professional PDF Report",
                 data=pdf_file,
                 file_name="Medical_Report_Analysis.pdf",
                 mime="application/pdf"
                 )
-                st.write(result)
+                st.write(answer)
             except:
                 st.error("Invalid response")
-                st.write(response.text)

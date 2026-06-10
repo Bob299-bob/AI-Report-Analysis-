@@ -8,8 +8,15 @@ sentence-transformers
 numpy
 faiss-cpu
 pdfplumber
+<<<<<<< HEAD
+=======
+opencv-python-headless
+>>>>>>> 78131b1 (save local changes before rebase)
 pytesseract
 Pillow
 ddgs
 reportlab
+<<<<<<< HEAD
 opencv-python-headless
+=======
+>>>>>>> 78131b1 (save local changes before rebase)

@@ -1,22 +1,27 @@
 from groq import Groq
 from dotenv import load_dotenv
 import os
-
+import numpy as np
+import faiss
+import streamlit as st
+import pdfplumber
+import cv2
+import pytesseract
 #fetch api
 load_dotenv()
 client=Groq(api_key=os.getenv('GROQ_API_KEY'))
 
 #vector Embedding model useing as Summerizer
 from sentence_transformers import SentenceTransformer
-model=SentenceTransformer(
-    "all-MiniLM-L6-v2"
-)
-
+@st.cache_resource
+def load_model():
+    model=SentenceTransformer(
+        "all-MiniLM-L6-v2"
+    )
+    return model
+model=load_model()
 #Extract data
-import pdfplumber
-import cv2
-import pytesseract
-data_path='mdecial.pdf'
+
 def extract_pdf(data_path):
     pdf_text=""
     with pdfplumber.open(data_path) as file:
@@ -25,7 +30,7 @@ def extract_pdf(data_path):
             if page_text:
                 pdf_text+=page_text+" "
     return pdf_text           
-img_path='report.jpeg'
+
 def extract_img(img_path):
     file_bytes = np.asarray(
         bytearray(img_path.read()),
@@ -39,9 +44,7 @@ def extract_img(img_path):
 
 
 #Rag system
-import numpy as np
-import faiss
-import streamlit as st
+@st.cache_data(show_spinner=False)
 def rag_system(data):
     chunks = [c.strip() for c in data.split("\n\n") if len(c.strip()) > 20]
     embed_data=model.encode(chunks)
@@ -65,6 +68,7 @@ def retrieve(index,chunks,query):
 
 #Function to collect data from internet
 from ddgs import DDGS
+@st.cache_data(show_spinner=False)
 def search_net(query):
     results=[]
     try:
@@ -77,7 +81,7 @@ def search_net(query):
     except Exception as e:
         print('search_error',e)
     return "\n\n".join(results)
-
+@st.cache_data(show_spinner=True)
 def generate_report(answer,result,query):
     context="\n\n".join(answer)
     context=context[:6000]
