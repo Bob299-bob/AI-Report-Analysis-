@@ -4,10 +4,11 @@ python-dotenv
 numpy
 faiss-cpu
 sentence-transformers
+torch
+torchvision
+transformers
 pdfplumber
 opencv-python-headless
 pytesseract
 duckduckgo-search
 reportlab
-torch
-transformers
