@@ -12,3 +12,4 @@ opencv-python-headless
 pytesseract
 duckduckgo-search
 reportlab
+ddgs
