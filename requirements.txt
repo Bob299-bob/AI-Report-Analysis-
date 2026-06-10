@@ -1,22 +1,13 @@
-fastapi
-uvicorn
 streamlit
-requests
-python-dotenv
 groq
-sentence-transformers
+python-dotenv
 numpy
 faiss-cpu
+sentence-transformers
 pdfplumber
-<<<<<<< HEAD
-=======
 opencv-python-headless
->>>>>>> 78131b1 (save local changes before rebase)
 pytesseract
-Pillow
-ddgs
+duckduckgo-search
 reportlab
-<<<<<<< HEAD
-opencv-python-headless
-=======
->>>>>>> 78131b1 (save local changes before rebase)
+torch
+transformers
